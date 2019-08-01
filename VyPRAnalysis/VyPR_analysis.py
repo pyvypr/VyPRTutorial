@@ -85,7 +85,7 @@ class function:
         if request==None:
             str=urllib2.urlopen(server_url+'client/list_function_calls_f/%s/'% self.fully_qualified_name).read()
         else:
-            str=urllib2.urlopen(server_url+'client/list_function_calls_http_id/%d/%d/'%(request.id,self.id)).read()
+            str=urllib2.urlopen(server_url+'client/list_function_calls_http_id/%d/%d/'%(request,self.id)).read()
         if (str=="None"): raise ValueError('no such calls')
         calls_dict=json.loads(str)
         calls_list=[]
@@ -197,10 +197,10 @@ class function_call:
         return observation(id=d["id"],instrumentation_point=d["instrumentation_point"],verdict=d["verdict"],observed_value=d["observed_value"],atom_index=d["atom_index"],previous_condition=d["previous_condition"])
 
     def get_verdicts(self,value=None):
-        if value=="None":
+        if value==None:
             str=urllib2.urlopen(server_url+'client/list_verdicts_of_call/%d/'% self.id).read()
         else:
-            str=urllib2.urlopen(server_url+'client/list_verdicts_with_value_of_call/%d/%d/'% self.id,value).read()
+            str=urllib2.urlopen(server_url+'client/list_verdicts_with_value_of_call/%d/%d/'%(self.id,value)).read()
         if str=="None": print('no verdicts for given function call')
         verdicts_dict=json.loads(str)
         verdicts_list=[]
